@@ -38,6 +38,8 @@
 #include <mbedtls/entropy_poll.h>
 #endif /* CONFIG_SPM_SERVICE_RNG */
 
+// TODO: Add define check for spm aes here
+#include <mbedtls/aes.h>
 
 int spm_secure_services_init(void)
 {
@@ -140,3 +142,150 @@ int spm_firmware_info(u32_t fw_address, struct fw_info *info)
 	return -EFAULT;
 }
 #endif
+
+// TODO: Add define check for spm aes here
+__TZ_NONSECURE_ENTRY_FUNC
+void spm_aes_init(spm_aes_context *ctx)
+{
+   if (ctx == NULL) {
+      // TODO: report error
+   }
+
+   mbedtls_aes_init((mbedtls_aes_context*)ctx);
+}
+
+__TZ_NONSECURE_ENTRY_FUNC
+void spm_aes_free(spm_aes_context *ctx)
+{
+   if (ctx == NULL) {
+      // TODO: report error
+   }
+
+   mbedtls_aes_free((mbedtls_aes_context*)ctx);
+}
+
+__TZ_NONSECURE_ENTRY_FUNC
+int spm_aes_setkey_enc(spm_aes_context *ctx, const unsigned char *key, unsigned int keybits)
+{
+   //printk("spm_aes_setkey_enc()\n"); //!!
+
+   int err;
+
+   if (key == NULL) {
+      // TODO: report error
+   }
+
+   if (keybits != 128 || keybits != 192 || keybits != 256) {
+      // TODO: report error
+   }
+
+   //printk("spm_aes_setkey_enc(): before calling mbedtls_aes_setkey_enc\n"); //!!
+
+   err = mbedtls_aes_setkey_enc((mbedtls_aes_context*)ctx, key, keybits);
+   return err;
+}
+
+__TZ_NONSECURE_ENTRY_FUNC
+int spm_aes_setkey_dec(spm_aes_context *ctx, const unsigned char *key, unsigned int keybits)
+{
+   int err;
+
+   if (key == NULL) {
+      // TODO: report error
+   }
+
+   if (keybits != 128 || keybits != 192 || keybits != 256) {
+      // TODO: report error
+   }
+
+   err = mbedtls_aes_setkey_enc((mbedtls_aes_context*)ctx, key, keybits);
+   return err;
+}
+
+__TZ_NONSECURE_ENTRY_FUNC
+int spm_aes_crypt_ecb(spm_aes_crypt_ecb_args *args)
+{
+   int err;
+
+   if (args->ctx == NULL) {
+      // TODO: report error
+   }
+
+   err = mbedtls_aes_crypt_ecb((mbedtls_aes_context*)args->ctx, args->mode, args->input, args->output);
+   return err;
+}
+
+// TODO: Add define check for spm aes cipher mode CBC here
+__TZ_NONSECURE_ENTRY_FUNC
+int spm_aes_crypt_cbc(spm_aes_crypt_cbc_args *args)
+{
+   int err;
+
+   if (args->ctx == NULL || args->input == NULL || args->output == NULL) {
+      // TODO: report error
+   }
+
+   err = mbedtls_aes_crypt_cbc((mbedtls_aes_context*)args->ctx, args->mode, args->length, args->iv, args->input, args->output);
+   return err;
+}
+
+// TODO: Add define check for spm aes cipher mode CFB here
+__TZ_NONSECURE_ENTRY_FUNC
+int spm_aes_crypt_cfb128(spm_aes_crypt_cfb128_args *args)
+{
+   int err;
+
+   if (args->ctx == NULL || args->input == NULL || args->output == NULL) {
+      // TODO: report error
+   }
+
+   err = mbedtls_aes_crypt_cfb128((mbedtls_aes_context*)args->ctx, args->mode, args->length, args->iv_off, args->iv, args->input, args->output);
+   return err;
+}
+
+__TZ_NONSECURE_ENTRY_FUNC
+int spm_aes_crypt_cfb8(spm_aes_crypt_cfb8_args *args)
+{
+   int err;
+
+   if (args->ctx == NULL || args->input == NULL || args->output == NULL) {
+      // TODO: report error
+   }
+
+   err = mbedtls_aes_crypt_cfb8((mbedtls_aes_context*)args->ctx, args->mode, args->length, args->iv, args->input, args->output);
+   return err;
+}
+
+// TODO: Add define check for cipher mode CTR here
+__TZ_NONSECURE_ENTRY_FUNC
+int spm_aes_crypt_ctr(spm_aes_crypt_ctr_args *args)
+{
+   int err;
+
+   if (args->ctx == NULL || args->input == NULL || args->output == NULL) {
+      // TODO: report error
+   }
+
+   err = mbedtls_aes_crypt_ctr((mbedtls_aes_context*)args->ctx, args->length, args->nc_off, args->nonce_counter, args->stream_block, args->input, args->output);
+   return err;
+}
+
+__TZ_NONSECURE_ENTRY_FUNC
+void spm_aes_encrypt(spm_aes_context *ctx, const unsigned char input[16], unsigned char output[16])
+{
+   if (ctx == NULL) {
+      // TODO: report error
+   }
+
+   mbedtls_aes_encrypt((mbedtls_aes_context*)ctx, input, output);
+}
+
+__TZ_NONSECURE_ENTRY_FUNC
+void spm_aes_decrypt(spm_aes_context *ctx, const unsigned char input[16], unsigned char output[16])
+{
+   if (ctx == NULL) {
+      // TODO: report error
+   }
+
+   mbedtls_aes_decrypt((mbedtls_aes_context*)ctx, input, output);
+}

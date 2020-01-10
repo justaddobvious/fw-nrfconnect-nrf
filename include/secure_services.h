@@ -77,6 +77,94 @@ int spm_request_read(void *destination, u32_t addr, size_t len);
  */
 int spm_firmware_info(u32_t fw_address, struct fw_info *info);
 
+#define SPM_AES_ENCRYPT 1 // TODO: Pull the define for MBEDTLS_AES_ENCRYPT from mbedtls/aes.h
+#define SPM_AES_DECRYPT 0 // TODO: Pull the define for MBEDTLS_AES_DECRYPT from mbedtls/aes.h
+
+typedef struct
+{
+   int nr;              /*!<  number of rounds  */
+   uint32_t *rk;        /*!<  AES round keys    */
+   uint32_t buf[68];    /*!<  unaligned data    */
+}
+spm_aes_context;
+
+typedef struct
+{
+   spm_aes_context *ctx;
+   int mode;
+   const unsigned char input[16];
+   unsigned char output[16];
+}
+spm_aes_crypt_ecb_args;
+
+typedef struct
+{
+   spm_aes_context *ctx;
+   int mode;
+   size_t length;
+   unsigned char iv[16];
+   const unsigned char *input;
+   unsigned char *output;
+}
+spm_aes_crypt_cbc_args;
+
+typedef struct
+{
+   spm_aes_context *ctx;
+   int mode;
+   size_t length;
+   size_t *iv_off;
+   unsigned char iv[16];
+   const unsigned char *input;
+   unsigned char *output;
+}
+spm_aes_crypt_cfb128_args;
+
+typedef struct
+{
+   spm_aes_context *ctx;
+   int mode;
+   size_t length;
+   unsigned char iv[16];
+   const unsigned char *input;
+   unsigned char *output;
+}
+spm_aes_crypt_cfb8_args;
+
+typedef struct
+{
+   spm_aes_context *ctx;
+   size_t length;
+   size_t *nc_off;
+   unsigned char nonce_counter[16];
+   unsigned char stream_block[16];
+   const unsigned char *input;
+   unsigned char *output;
+}
+spm_aes_crypt_ctr_args;
+
+void spm_aes_init(spm_aes_context *aes);
+
+void spm_aes_free(spm_aes_context *aes);
+
+int spm_aes_setkey_enc(spm_aes_context *aes, const unsigned char *key, unsigned int keybits);
+
+int spm_aes_setkey_dec(spm_aes_context *aes, const unsigned char *key, unsigned int keybits);
+
+int spm_aes_crypt_ecb(spm_aes_crypt_ecb_args *args);
+
+int spm_aes_crypt_cbc(spm_aes_crypt_cbc_args *args);
+
+int spm_aes_crypt_cfb128(spm_aes_crypt_cfb128_args *args);
+
+int spm_aes_crypt_cfb8(spm_aes_crypt_cfb8_args *args);
+
+int spm_aes_crypt_ctr(spm_aes_crypt_ctr_args *args);
+
+void spm_aes_encrypt(spm_aes_context *ctx, const unsigned char input[16], unsigned char output[16]);
+
+void spm_aes_decrypt(spm_aes_context *ctx, const unsigned char input[16], unsigned char output[16]);
+
 #ifdef __cplusplus
 }
 #endif

@@ -16,6 +16,7 @@
 #include <stdint.h>
 
 #include <nrf_socket.h>
+#include <zephyr.h>
 
 /**@brief Credential types. */
 enum modem_key_mgnt_cred_type {

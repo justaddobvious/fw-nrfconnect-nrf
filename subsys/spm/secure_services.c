@@ -179,8 +179,6 @@ int spm_aes_setkey_enc(spm_aes_context *ctx, const unsigned char *key, unsigned 
       // TODO: report error
    }
 
-   //printk("spm_aes_setkey_enc(): before calling mbedtls_aes_setkey_enc\n"); //!!
-
    err = mbedtls_aes_setkey_enc((mbedtls_aes_context*)ctx, key, keybits);
    return err;
 }
@@ -198,7 +196,7 @@ int spm_aes_setkey_dec(spm_aes_context *ctx, const unsigned char *key, unsigned 
       // TODO: report error
    }
 
-   err = mbedtls_aes_setkey_enc((mbedtls_aes_context*)ctx, key, keybits);
+   err = mbedtls_aes_setkey_dec((mbedtls_aes_context*)ctx, key, keybits);
    return err;
 }
 
@@ -226,6 +224,7 @@ int spm_aes_crypt_cbc(spm_aes_crypt_cbc_args *args)
    }
 
    err = mbedtls_aes_crypt_cbc((mbedtls_aes_context*)args->ctx, args->mode, args->length, args->iv, args->input, args->output);
+
    return err;
 }
 

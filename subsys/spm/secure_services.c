@@ -167,8 +167,6 @@ void spm_aes_free(spm_aes_context *ctx)
 __TZ_NONSECURE_ENTRY_FUNC
 int spm_aes_setkey_enc(spm_aes_context *ctx, const unsigned char *key, unsigned int keybits)
 {
-   //printk("spm_aes_setkey_enc()\n"); //!!
-
    int err;
 
    if (key == NULL) {

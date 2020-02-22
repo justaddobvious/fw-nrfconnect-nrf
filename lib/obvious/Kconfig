@@ -1,0 +1,100 @@
+#######################################################################
+##
+##            @@@
+##            @@@
+##   @@@@@@@  @@@@@@@@  @@   @@@ @@   @@@@@@@  @@@   @@  @@@@@@@
+##  @@    @@@ @@@   @@@  @@  @@  @@  @@    @@@ @@@   @@  @@@@
+##  @@    @@@ @@@   @@@  @@@@@   @@  @@    @@@ @@@   @@      @@@
+##   @@@@@@@  @@@@@@@@    @@@    @@   @@@@@@@   @@@@@@@  @@@@@@@  @@
+##
+##                                                      -smMMm/         
+##    `odmhs.                                         :hMMMMMNN/        
+##   `hMMMMMNy/`                                    +mMMMMMMNmdy        
+##   -NMMMMMMMNms.                                oNMMMMMMMMNdyh-       
+##   +MNMMMMMMMMMMd/`                          -sNMNMMMMMNNNmhsds       
+##   yNmMMMMMMMMMMNmmy-                      -sNNmNMMMNNNmhyo+sdy       
+##   sMNNMMMMMMMMMNNmmNh/-....//::./+oooossydmmsodmmmNMMNNmdyoydh       
+##   /MNdmmMMMMMMNNmdyyhdmdmNNNNNNNMNNNMNMNdmm++oyddmNNNNmdyso+yh.      
+##   `Nmmhhddddmmmmdhs++ydmhhdmNMNNMNMmMdNmdddhdhydmmmddmNmdyssmd.      
+##   `NmhhmNMMMNmNNmdyyshmNddmmddNmNNNmNdhmhhhmNmdhyyyyoo/:+syddo-
+##   `mMMmdmdhyyyyyyhmNNNNmmmddhhNdNmmMNNmdhddmmNmyo+///-.-:++dNmo
+##   :NMMdss+::/:.`-oymMMMNmdhhdmMNNNNMNMMmmmmdmNMMNdhhs/::++ohmMd-    
+##   :MMNyyoo/:soooydMMMMNmddhmMNNMMMNMMNNMNdhdmmmNMMMMNdhs+/ohddmy    
+##  .mMMNdyo++ohNNMMMMMNmmddhdNMMNNMNNMMNMMMmmNMNdmNmNNMMMmhyddhhhh-    
+##  :NNNmmmhydMMMMMMNNNNNNMMNNMMMMNNddNNMMMMNNMMMMNNmddmNMMMMNmhhys
+##  :NNNNNNMMMMMMMNNNNNMMMMMMNMMMNNNdydmNmNNmmhyhmMMNmdhhdmNNdhysy/
+##  .mmdmNMMMMMNNNNNMMMNhyo++shddhyyssyhhyyy/`  ``.+yddyyyyhdmmhsy:
+##   yNmmNMMMNNNNmNNmy+`-.    .syhysyosyydd/-`  `. -+/+shhyhhddys+.
+##   -ddhmNMMNNNNmhsydm/--`  `.`yNmdhyyhhms ::.`.:odmmds:+hddhhy/
+##    .odmNMMMNmdsdNMMMMmysooso:-ymmmmNmhs`-hddmNNNNNmmdo.:shhyo.
+##     `oNNMNmhh/smNMMMMMMMMMMMm++hdMMMNh+-odNNNNNmNNNNNmy-+syy:
+##      `sNNmhs+/dMMMMMNNNNNNNNdyo/dMMMMh::shhhhdmmmmddmdh::oo+
+##       `/ddo-:omMMNmmmddNNNmmmmhoo+yy+:-ydddhhdddddhhdmds:oy.
+##        -mMNmdmNMMNmddmNMmddNNNNh-  ` `+NNmdyydNNmmdddmmmmmh-
+##        -mMMMMMMMMNmmNNMMNNMMNMMMMh:`:dNNNNNNNMMNNNNNNNNNNNy.
+##        .yMMMMMMMMMMNNNNMMMMMMNNmhs:`:ohmmNNNMMMNNNNNMMMMNNo-
+##         .sNMMMMMMMMMMNNNMMMMMNdyo-.`.:+shmNNNNNNNNNNNNNNNNd:.
+##         .:dMMMMMMMMMNNNNNNNNNmdhhhysyhddmmmmmmmmNNNNmdddmmNy:
+##         -+nMMMMMMMMNNNmmNmmmdmmmmmmmmmmdhhhhddmmddhhhhhdmmNm+:
+##         .sMMMMMMNMMNNmmmmmmmdddddddhhhhyyyyyyyyyyyyyyyyydmmm/`
+##          yMMMMMMNNNNmmmmmmddddhhhhhhhhhhssssso+syyyhhhddhddm+  
+##         .dMMMMMMNNNNmmNmdmddhddddhhhhhhhhysyyys+oyyhhddmdddms`  
+##        -/NMMMMMMMMNNNmdhhddhhhhdddhhhhhhyyssyyyyosyyhdmmmddmm:       
+##        `/MMMMMMMMNNNNmhyshyyhhdmmdoshdhyyyssyyyhyyhhddddddddds.    
+##
+## Copyright © 2019,
+## 4iiii Innovations Inc.,
+## Cochrane, Alberta, Canada.
+## All rights reserved.
+## Redistribution and use in source and binary forms, with or without
+## modification, are not permitted without express written approval of
+## 4iiii Innovations Inc.
+#######################################################################
+
+menu "Obvious - Embedded Device Management Platform"
+
+config OBVIOUS
+         bool "Obvious - Embedded device mangement platform"
+         select BSD_LIBRARY
+         select REBOOT
+         select MODEM_KEY_MGMT
+         select MQTT_LIB
+         select MQTT_LIB_TLS
+         select AWS_FOTA
+         select DOWNLOAD_CLIENT
+         select DFU_TARGET
+         select DFU_TARGET_MCUBOOT
+         select DFU_TARGET_MCUBOOT_SAVE_PROGRESS
+         select DFU_TARGET_MODEM
+         select FOTA_DOWNLOAD
+         select BOOTLOADER_MCUBOOT
+         select IMG_MANAGER
+         select IMG_ERASE_PROGRESSIVELY
+         select FLASH
+         select FLASH_PAGE_LAYOUT
+         select FLASH_MAP
+         select MPU_ALLOW_FLASH_WRITE
+         select SETTINGS
+         select NVS
+         depends on NETWORKING && !NET_NATIVE
+         default n
+         help
+            This option enables the Obvious embedded device management platform.
+            This Obvious platform allows you to manage features firmware on an
+            embedded device. The obvious platform utilises the zephyr MQTT library
+            and the NCS modules for performing AWS FOTA.
+
+if (OBVIOUS)
+
+#config NET_NATIVE
+#         bool
+#         default n
+
+#module=OBVIOUS
+#module-dep=LOG
+#module-str=OBVIOUS - Embedded device management platform
+#source"${ZEPHYR_BASE}/subsys/logging/Kconfig.template.log_config"
+
+endif # OBVIOUS
+
+endmenu

@@ -51,48 +51,13 @@
 ## 4iiii Innovations Inc.
 #######################################################################
 
+cmake_minimum_required(VERSION 3.13.1)
 
-menu "Obvious - Embedded Device Management Platform"
+include($ENV{NCS_BASE}/nrf/cmake/boilerplate.cmake NO_POLICY_SCOPE)
+include($ENV{ZEPHYR_BASE}/cmake/app/boilerplate.cmake NO_POLICY_SCOPE)
+project(obvious_example_app)
+zephyr_compile_definitions(PROJECT_NAME=${PROJECT_NAME})
 
-config OBVIOUS
-         bool "Obvious - Embedded device mangement platform"
-         select AWS_FOTA
-         select BOOTLOADER_MCUBOOT
-         select BSD_LIBRARY
-         select DFU_TARGET
-         select DFU_TARGET_MCUBOOT
-         select DFU_TARGET_MCUBOOT_SAVE_PROGRESS
-         select DFU_TARGET_MODEM
-         select DOWNLOAD_CLIENT
-         select FLASH
-         select FLASH_MAP
-         select FLASH_PAGE_LAYOUT
-         select FOTA_DOWNLOAD
-         select IMG_ERASE_PROGRESSIVELY
-         select IMG_MANAGER
-         select MODEM_KEY_MGMT
-         select MPU_ALLOW_FLASH_WRITE
-         select MQTT_LIB
-         select MQTT_LIB_TLS
-         select NVS
-         select REBOOT
-         select SETTINGS
-         depends on LTE_LINK_CONTROL && !LTE_AUTO_INIT_AND_CONNECT
-         depends on NETWORKING && !NET_NATIVE
-         default n
-         help
-            This option enables the Obvious embedded device management platform.
-            This Obvious platform allows you to manage features firmware on an
-            embedded device. The obvious platform utilises the zephyr MQTT library
-            and the NCS modules for performing AWS FOTA.
+target_sources(app PRIVATE src/main.c)
 
-if (OBVIOUS)
-
-#module=OBVIOUS
-#module-dep=LOG
-#module-str=OBVIOUS - Embedded device management platform
-#source"${ZEPHYR_BASE}/subsys/logging/Kconfig.template.log_config"
-
-endif # OBVIOUS
-
-endmenu
+zephyr_include_directories(inc)

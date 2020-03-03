@@ -88,10 +88,10 @@ config OBVIOUS
 
 if (OBVIOUS)
 
-#module=OBVIOUS
-#module-dep=LOG
-#module-str=OBVIOUS - Embedded device management platform
-#source"${ZEPHYR_BASE}/subsys/logging/Kconfig.template.log_config"
+module = OBVIOUS
+module-dep = LOG
+module-str = OBVIOUS - Embedded device management platform
+source"${ZEPHYR_BASE}/subsys/logging/Kconfig.template.log_config"
 
 endif # OBVIOUS
 

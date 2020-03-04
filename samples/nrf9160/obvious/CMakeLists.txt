@@ -42,13 +42,6 @@
 ##        -/NMMMMMMMMNNNmdhhddhhhhdddhhhhhhyyssyyyyosyyhdmmmddmm:       
 ##        `/MMMMMMMMNNNNmhyshyyhhdmmdoshdhyyyssyyyhyyhhddddddddds.    
 ##
-## Copyright © 2019,
-## 4iiii Innovations Inc.,
-## Cochrane, Alberta, Canada.
-## All rights reserved.
-## Redistribution and use in source and binary forms, with or without
-## modification, are not permitted without express written approval of
-## 4iiii Innovations Inc.
 #######################################################################
 
 cmake_minimum_required(VERSION 3.13.1)

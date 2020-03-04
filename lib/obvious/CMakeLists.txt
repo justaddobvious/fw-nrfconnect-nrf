@@ -42,30 +42,40 @@
 ##        -/NMMMMMMMMNNNmdhhddhhhhdddhhhhhhyyssyyyyosyyhdmmmddmm:       
 ##        `/MMMMMMMMNNNNmhyshyyhhdmmdoshdhyyyssyyyhyyhhddddddddds.    
 ##
-## Copyright © 2019,
-## 4iiii Innovations Inc.,
-## Cochrane, Alberta, Canada.
-## All rights reserved.
-## Redistribution and use in source and binary forms, with or without
-## modification, are not permitted without express written approval of
-## 4iiii Innovations Inc.
 #######################################################################
 
 set(OBVIOUS_EMBEDDED_SDK_LIB_PATH ${CMAKE_CURRENT_SOURCE_DIR})
 set(OBVIOUS_EMBEDDED_SDK_TARGET obvious_embedded_sdk)
 
-if(DEFINED CONFIG_OBVIOUS_LOG_LEVEL_DBG)
-   zephyr_library_import(${OBVIOUS_EMBEDDED_SDK_TARGET} ${OBVIOUS_EMBEDDED_SDK_LIB_PATH}/bin/libobvious_embedded_sdk_LOG_LVL_DBG.a)
-elseif(DEFINED CONFIG_OBVIOUS_LOG_LEVEL_WRN)
-   zephyr_library_import(${OBVIOUS_EMBEDDED_SDK_TARGET} ${OBVIOUS_EMBEDDED_SDK_LIB_PATH}/bin/libobvious_embedded_sdk_LOG_LVL_WRN.a)
-elseif(DEFINED CONFIG_OBVIOUS_LOG_LEVEL_INF)
-   zephyr_library_import(${OBVIOUS_EMBEDDED_SDK_TARGET} ${OBVIOUS_EMBEDDED_SDK_LIB_PATH}/bin/libobvious_embedded_sdk_LOG_LVL_INF.a)
-elseif(DEFINED CONFIG_OBVIOUS_LOG_LEVEL_ERR)
-   zephyr_library_import(${OBVIOUS_EMBEDDED_SDK_TARGET} ${OBVIOUS_EMBEDDED_SDK_LIB_PATH}/bin/libobvious_embedded_sdk_LOG_LVL_ERR.a)
-else(DEFINED CONFIG_OBVIOUS_LOG_LEVEL_DBG)
-   zephyr_library_import(${OBVIOUS_EMBEDDED_SDK_TARGET} ${OBVIOUS_EMBEDDED_SDK_LIB_PATH}/bin/libobvious_embedded_sdk_LOG_LVL_NONE.a)
-endif(DEFINED CONFIG_OBVIOUS_LOG_LEVEL_DBG)
-
+if (DEFINED CONFIG_BOARD_NRF9160_PCA10090NS)
+   if (DEFINED CONFIG_OBVIOUS_LOG_LEVEL_DBG)
+      set(OBVIOUS_EMBEDDED_SDK_BIN_PATH ${OBVIOUS_EMBEDDED_SDK_LIB_PATH}/bin/nrf9160_pca10090ns/LOG_LEVEL_DBG)
+   elseif (DEFINED CONFIG_OBVIOUS_LOG_LEVEL_WRN)
+      set(OBVIOUS_EMBEDDED_SDK_BIN_PATH ${OBVIOUS_EMBEDDED_SDK_LIB_PATH}/bin/nrf9160_pca10090ns/LOG_LEVEL_WRN)
+   elseif (DEFINED CONFIG_OBVIOUS_LOG_LEVEL_INF)
+      set(OBVIOUS_EMBEDDED_SDK_BIN_PATH ${OBVIOUS_EMBEDDED_SDK_LIB_PATH}/bin/nrf9160_pca10090ns/LOG_LEVEL_INF)
+   elseif (DEFINED CONFIG_OBVIOUS_LOG_LEVEL_ERR)
+      set(OBVIOUS_EMBEDDED_SDK_BIN_PATH ${OBVIOUS_EMBEDDED_SDK_LIB_PATH}/bin/nrf9160_pca10090ns/LOG_LEVEL_ERR)
+   else (DEFINED CONFIG_OBVIOUS_LOG_LEVEL_DBG)
+      set(OBVIOUS_EMBEDDED_SDK_BIN_PATH ${OBVIOUS_EMBEDDED_SDK_LIB_PATH}/bin/nrf9160_pca10090ns/LOG_LEVEL_NONE)
+   endif(DEFINED CONFIG_OBVIOUS_LOG_LEVEL_DBG)
+elseif (DEFINED CONFIG_BOARD_NRF9160_PCA20035NS)
+   if (DEFINED CONFIG_OBVIOUS_LOG_LEVEL_DBG)
+      set(OBVIOUS_EMBEDDED_SDK_BIN_PATH ${OBVIOUS_EMBEDDED_SDK_LIB_PATH}/bin/nrf9160_pca20035ns/LOG_LEVEL_DBG)
+   elseif (DEFINED CONFIG_OBVIOUS_LOG_LEVEL_WRN)
+      set(OBVIOUS_EMBEDDED_SDK_BIN_PATH ${OBVIOUS_EMBEDDED_SDK_LIB_PATH}/bin/nrf9160_pca20035ns/LOG_LEVEL_WRN)
+   elseif (DEFINED CONFIG_OBVIOUS_LOG_LEVEL_INF)
+      set(OBVIOUS_EMBEDDED_SDK_BIN_PATH ${OBVIOUS_EMBEDDED_SDK_LIB_PATH}/bin/nrf9160_pca20035ns/LOG_LEVEL_INF)
+   elseif (DEFINED CONFIG_OBVIOUS_LOG_LEVEL_ERR)
+      set(OBVIOUS_EMBEDDED_SDK_BIN_PATH ${OBVIOUS_EMBEDDED_SDK_LIB_PATH}/bin/nrf9160_pca20035ns/LOG_LEVEL_ERR)
+   else (DEFINED CONFIG_OBVIOUS_LOG_LEVEL_DBG)
+      set(OBVIOUS_EMBEDDED_SDK_BIN_PATH ${OBVIOUS_EMBEDDED_SDK_LIB_PATH}/bin/nrf9160_pca20035ns/LOG_LEVEL_NONE)
+   endif(DEFINED CONFIG_OBVIOUS_LOG_LEVEL_DBG)
+else (DEFINED CONFIG_BOARD_NRF9160_PCA10090NS)
+   message(FATAL_ERROR "Board type not supported. Must select either nrf9160_pca10090ns or nrf9160_pca20035ns.")
+endif(DEFINED CONFIG_BOARD_NRF9160_PCA10090NS)
+   
+zephyr_library_import(${OBVIOUS_EMBEDDED_SDK_TARGET} ${OBVIOUS_EMBEDDED_SDK_BIN_PATH}/libobvious_embedded_sdk.a)
 zephyr_include_directories(inc)
 zephyr_library()
 zephyr_library_sources(src/obvious_embedded_sdk.c)

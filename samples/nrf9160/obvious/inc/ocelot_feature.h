@@ -44,4 +44,13 @@
 //
 ///////////////////////////////////////////////////////////////////////
 
-// This file is just a place holder for the build system.
+
+# if !defined(OCELOT_FEATURE_H_)
+#define OCELOT_FEATURE_H_
+
+// This is a place holder. Replace this file with your own ocelot_feature.h by
+// creating an obvious account at obvious.xyz, logging into your obvious portal
+// with your account, creating a new product, and downloading your personalized
+// ocelot_feature.h file.
+
+#endif // !defined(OCELOT_FEATURE_H_)

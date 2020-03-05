@@ -49,27 +49,15 @@ menu "Obvious - Embedded Device Management Platform"
 
 config OBVIOUS
          bool "Obvious - Embedded device mangement platform"
-         select AWS_FOTA
-         select BOOTLOADER_MCUBOOT
          select BSD_LIBRARY
-         select DFU_TARGET
-         select DFU_TARGET_MCUBOOT
-         select DFU_TARGET_MCUBOOT_SAVE_PROGRESS
-         select DFU_TARGET_MODEM
-         select DOWNLOAD_CLIENT
          select FLASH
          select FLASH_MAP
          select FLASH_PAGE_LAYOUT
-         select FOTA_DOWNLOAD
-         select IMG_ERASE_PROGRESSIVELY
-         select IMG_MANAGER
          select MODEM_KEY_MGMT
          select MPU_ALLOW_FLASH_WRITE
          select MQTT_LIB
          select MQTT_LIB_TLS
-         select NVS
          select REBOOT
-         select SETTINGS
          depends on LTE_LINK_CONTROL && !LTE_AUTO_INIT_AND_CONNECT
          depends on NETWORKING && !NET_NATIVE
          default n
@@ -80,6 +68,25 @@ config OBVIOUS
             and the NCS modules for performing AWS FOTA.
 
 if (OBVIOUS)
+
+config OBVIOUS_FOTA
+         bool "Include FOTA handled by Obvious"
+         select AWS_FOTA
+         select BOOTLOADER_MCUBOOT
+         select DFU_TARGET
+         select DFU_TARGET_MCUBOOT
+         select DFU_TARGET_MCUBOOT_SAVE_PROGRESS
+         select DFU_TARGET_MODEM
+         select DOWNLOAD_CLIENT
+         select FOTA_DOWNLOAD
+         select IMG_ERASE_PROGRESSIVELY
+         select IMG_MANAGER
+         select NVS
+         select SETTINGS
+         default n
+         help
+            This option enables AWS Fota, MCUBoot, and DFU Target, Image Manager,
+            and Settings to support Firmware over the air handled my Obvious.
 
 module = OBVIOUS
 module-dep = LOG

@@ -148,9 +148,14 @@ int fota_download_start(char *host, char *file)
 {
 	int err = -1;
 
-	struct download_client_cfg config = {
-		.sec_tag = -1, /* HTTP */
-	};
+        // Changes by obvious for HTTPS downloads of firmware.
+        struct download_client_cfg config = {
+                .sec_tag = 0xBEEFBABE + 1,
+                .apn = NULL
+        };
+	//struct download_client_cfg config = {
+	//	.sec_tag = -1, /* HTTP */
+	//};
 
 	if (host == NULL || file == NULL || callback == NULL) {
 		return -EINVAL;

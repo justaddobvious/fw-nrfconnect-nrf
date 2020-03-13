@@ -58,6 +58,7 @@ config OBVIOUS
          select MQTT_LIB
          select MQTT_LIB_TLS
          select REBOOT
+         depends on HEAP_MEM_POOL_SIZE >= 1024
          depends on LTE_LINK_CONTROL && !LTE_AUTO_INIT_AND_CONNECT
          depends on NETWORKING && !NET_NATIVE
          default n
@@ -78,6 +79,7 @@ config OBVIOUS_FOTA
          select DFU_TARGET_MCUBOOT_SAVE_PROGRESS
          select DFU_TARGET_MODEM
          select DOWNLOAD_CLIENT
+         select DOWNLOAD_CLIENT_TLS
          select FOTA_DOWNLOAD
          select IMG_ERASE_PROGRESSIVELY
          select IMG_MANAGER

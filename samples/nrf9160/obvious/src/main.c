@@ -66,6 +66,7 @@
 #define MAIN_LED_BLINK_PERIOD               50              // The period for an LED blinking "feature" that obvious can enable/disable.
 
 
+static const char main_broker_hostname = "a3qckgxw3m6axm-ats.iot.us-west-2.amazonaws.com"; // This is the default obvious broker hostname.
 // TODO: Fill in your product ID from the obvious portal here:
 static const uint32_t main_product_id = // ENTER PRODUCT ID HERE //                   // The product ID that corresponds to and obvious product.
 // TODO: Fill in your application version here:
@@ -148,6 +149,7 @@ void main(void)
    printk("MAIN: Initializing sandcat... ");
    sandcat_init_struct.application_version = main_application_version;
    sandcat_init_struct.product_id = main_product_id;
+   sandcat_init_struct.broker_hostname = main_broker_hostname;
    sandcat_init_struct.evt_handler = main_sandcat_evt_handler;
    sandcat_error = sandcat_init(&sandcat_init_struct);
 
